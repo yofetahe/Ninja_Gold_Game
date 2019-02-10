@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninja Gold</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        form{
+            display: inline-block;
+            width: 200px;
+            height: auto;
+            border: 1px solid black;
+        }
+        .formContainer{
+            text-align: center;
+        }
+        .wrapper{
+            width: 854px;
+            padding: 20px;
+        }
+        .gain{
+            color: green;
+        }
+        .loss{
+            color: red;
+        }
+        .activitiesList{           
+            min-height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container wrapper">
+        <div>
+            <p>Your Gold: <input type="text" name="gold" value="{{ session['goldNum'] }}"> </p>
+        </div>
+        <div class="formContainer">
+            <form action="/process_money" method="POST">
+                <input type="hidden" name="building" value="farm"/>
+                <h4>Farm</h4>
+                <p>(earn 10-20 golds)</p>
+                <input type="submit" class="btn btn-primary" value="Find Gold">
+            </form>
+            <form action="/process_money" method="POST">
+                <input type="hidden" name="building" value="cave"/>
+                <h4>Cave</h4>
+                <p>(earn 5-10 golds)</p>
+                <input type="submit" class="btn btn-primary" value="Find Gold">
+            </form>
+            <form action="/process_money" method="POST">
+                <input type="hidden" name="building" value="house"/>
+                <h4>House</h4>
+                <p>(earn 2-5 golds)</p>
+                <input type="submit" class="btn btn-primary" value="Find Gold">
+            </form>
+            <form action="/process_money" method="POST">
+                <input type="hidden" name="building" value="casino"/>
+                <h4>Casino</h4>
+                <p>(earn 0-50 golds)</p>
+                <input type="submit" class="btn btn-primary" value="Find Gold">
+            </form>
+        </div>
+        <div>
+            <div class="form-group">
+                <p>Activities</p>
+            </div>
+            <div class="activitiesList">
+                {% for activity in activities %}
+                    {% if 'lost' in activity: %}
+                        <div class="loss"> {{ activity }} </div>
+                    {% else: %}
+                        <div class="gain"> {{ activity }} </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="form-group">
+            <a href="/clear_session" class="btn btn-primary">REST</a>
+        </div>
+    </div>
+</body>
+</html>
